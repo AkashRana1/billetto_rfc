@@ -10,6 +10,6 @@ module BillettoRfc
     config.load_defaults 7.2
 
     config.active_job.queue_adapter = :sidekiq
-    config.clickup = ClickUp::Adapter.new(api_key: ENV["CLICKUP_API_KEY"])
+    # config.clickup = ClickUp::Adapter.new(api_key: ENV["CLICKUP_API_KEY"])
   end
 end
