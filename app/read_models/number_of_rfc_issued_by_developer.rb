@@ -1,0 +1,20 @@
+module ReadModels
+  class NumberOfRfcIssuedByDeveloper
+    include Handler.async(queue: "low")
+    subscribes_to Guidelines::RfcIssued
+
+    def call(fact)
+      developer_id = fact.data.fetch(:developer_id)
+      ApplicationRecord.transaction do
+        Count.find_or_initialize_by(developer_id: developer_id).lock!.tap do |record|
+          record.value = record.value.to_i + 1
+          record.save!
+        end
+      end
+    end
+
+    class Count < ApplicationRecord
+      self.table_name = "number_of_rfc_issued_by_developer"
+    end
+  end
+end

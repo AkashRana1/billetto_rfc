@@ -1,0 +1,2 @@
+class RfcNumberSequence < ApplicationRecord
+end
